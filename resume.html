@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Application - Hyatt</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-gold: #c5a880;
+            --text-green: #4ade80;
+            --border-green: rgba(74, 222, 128, 0.3);
+            --text-red: #f87171;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .top-bar {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .back-btn {
+            background: transparent;
+            text-decoration: none;
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            border-color: var(--text-green);
+            color: var(--text-green);
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        header p {
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 500;
+        }
+
+        label {
+            display: block;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }
+
+        input[type="text"], 
+        input[type="email"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--card-border);
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: var(--text-green);
+            font-weight: 600;
+            outline: none;
+        }
+
+        input:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Styling for the Gold Position Text */
+        .position-highlight {
+            color: var(--accent-gold) !important;
+            border-color: rgba(197, 168, 128, 0.2) !important;
+        }
+
+        .file-drop-zone {
+            position: relative;
+            border: 2px dashed var(--card-border);
+            border-radius: 14px;
+            padding: 2rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.01);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .file-drop-zone:hover {
+            border-color: var(--text-green);
+            background: rgba(74, 222, 128, 0.02);
+        }
+
+        .file-drop-zone p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-drop-zone span {
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-name-display {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: var(--text-green);
+            font-weight: 600;
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 2.5rem;
+            padding: 16px;
+            border: none;
+            border-radius: 35px;
+            background: var(--text-green);
+            color: #0f172a;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: #22c55e;
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            background: #475569;
+            color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="openings.html" class="back-btn">← Back to Jobs</a>
+    </div>
+
+    <div class="form-container">
+        <header>
+            <h1>Submit CV / Resume</h1>
+            <p>Hyatt Regency Hotel Rochester</p>
+        </header>
+
+        <form id="cvUploadForm" onsubmit="return false;">
+            <!-- NEW FIELD: Shows them exactly what role they clicked -->
+            <label>Applying For Position</label>
+            <input type="text" id="formRole" class="position-highlight" disabled value="Detecting position...">
+
+            <label>Applicant Name</label>
+            <input type="text" id="formName" disabled value="Loading...">
+
+            <label>Email Address</label>
+            <input type="email" id="formEmail" disabled value="Loading...">
+
+            <label>Attach Document</label>
+            <div class="file-drop-zone">
+                <p id="uploadPrompt">Click or Drag your file here to upload</p>
+                <span>Supported Formats: PDF, DOCX (Max 5MB)</span>
+                <input type="file" id="cvFile" accept=".pdf,.docx,.doc" required>
+            </div>
+            <div id="fileName" class="file-name-display"></div>
+
+            <button id="submitApplicationBtn">SUBMIT APPLICATION</button>
+        </form>
+
+        <div class="message" id="formMessage"></div>
+    </div>
+
+    <!-- Firebase System Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCsZbX8doOr6DxT7C9p8SK6YReKKlyVcNI",
+            authDomain: "hyatt-regency-afc7e.firebaseapp.com",
+            projectId: "hyatt-regency-afc7e",
+            storageBucket: "hyatt-regency-afc7e.firebasestorage.app",
+            messagingSenderId: "636460619228",
+            appId: "1:636460619228:web:5734324ff28ca738f4eb19",
+            measurementId: "G-K5KTLSKDRN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Cloudinary Cloud Settings
+        const CLOUD_NAME = "nfqodks2";
+        const UPLOAD_PRESET = "Hyatt rochester"; 
+        const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`;
+
+        let currentUid = null;
+        let finalRoleName = "General Application"; // Fallback position title
+
+        const formMessage = document.getElementById("formMessage");
+        const fileInput = document.getElementById("cvFile");
+        const fileNameDisplay = document.getElementById("fileName");
+        const uploadPrompt = document.getElementById("uploadPrompt");
+        const submitBtn = document.getElementById("submitApplicationBtn");
+
+        // --- NEW LOGIC: READ LINK PARAMETERS ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const roleSlug = urlParams.get('role');
+
+        const roleMapping = {
+            'waiter': 'Food & Beverage Waiter / Waitress',
+            'receptionist': 'Front Desk Receptionist',
+            'housekeeper': 'Room & Housekeeping Attendant',
+            'bellboy': 'Guest Service Bell Boy',
+            'poolattendant': 'Swimming Pool Attendant'
+        };
+
+        if (roleSlug && roleMapping[roleSlug]) {
+            finalRoleName = roleMapping[roleSlug];
+        }
+        document.getElementById("formRole").value = finalRoleName;
+        // ----------------------------------------
+
+        // Verify active user status and map to inputs
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUid = user.uid;
+                const userDocRef = doc(db, "Applicants", user.uid);
+                const userDoc = await getDoc(userDocRef);
+
+                if (userDoc.exists()) {
+                    const data = userDoc.data();
+                    document.getElementById("formName").value = data.fullName || "N/A";
+                    document.getElementById("formEmail").value = data.email || user.email;
+                }
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        fileInput.onchange = () => {
+            if (fileInput.files.length > 0) {
+                const selectedFile = fileInput.files[0];
+                uploadPrompt.innerText = "Document Selected!";
+                fileNameDisplay.innerText = `📄 ${selectedFile.name}`;
+                fileNameDisplay.style.display = "block";
+            }
+        };
+
+        function generateApplicationCode() {
+            const numbers = Math.floor(10000 + Math.random() * 90000);
+            return `HYT-${numbers}`;
+        }
+
+        submitBtn.onclick = async () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                formMessage.innerHTML = "<span style='color: var(--text-red);'>Please pick a file to upload first.</span>";
+                return;
+            }
+
+            submitBtn.disabled = true;
+            formMessage.innerHTML = "<span style='color: var(--text-green);'>Uploading your file securely...</span>";
+
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", UPLOAD_PRESET);
+
+            try {
+                const res = await fetch(CLOUDINARY_URL, {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!res.ok) throw new Error("Cloudinary rejected upload request.");
+
+                const uploadResult = await res.json();
+                const secureFileUrl = uploadResult.secure_url;
+
+                formMessage.innerHTML = "<span style='color: var(--text-green);'>Finalizing application registration...</span>";
+
+                const targetDocRef = doc(db, "Applicants", currentUid);
+                
+                const currentFormattedDate = new Date().toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                const uniqueCode = generateApplicationCode();
+
+                // SAVES THE CAPTURED ROLE INTO FIRESTORE HERE
+                await updateDoc(targetDocRef, {
+                    appliedPosition: finalRoleName, // <-- Admin visibility field fixed!
+                    applicationStatus: "Pending Review",
+                    dateApplied: currentFormattedDate,
+                    applicationCode: uniqueCode,
+                    viewAppLink: secureFileUrl
+                });
+
+                formMessage.innerHTML = "<span style='color: var(--text-green);'>Success! Redirecting back...</span>";
+
+                setTimeout(() => {
+                    window.location.href = "portal.html";
+                }, 1500);
+
+            } catch (err) {
+                console.error(err);
+                formMessage.innerHTML = "<span style='color: var(--text-red);'>An error occurred. Please try again.</span>";
+                submitBtn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>
