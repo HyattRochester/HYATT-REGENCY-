@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HYATT REGENCY HOTEL, ROCHESTER</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f5f5f5;
+color:#333;
+}
+
+/* HEADER */
+
+header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:70px;
+background:#0b2c52;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+z-index:1000;
+box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+
+.logo{
+color:white;
+font-size:20px;
+font-weight:700;
+}
+
+.menu-btn{
+font-size:30px;
+color:white;
+cursor:pointer;
+user-select:none;
+}
+
+/* SIDE MENU */
+
+.sidebar{
+position:fixed;
+top:0;
+left:-280px;
+width:280px;
+height:100%;
+background:white;
+box-shadow:5px 0 20px rgba(0,0,0,.3);
+transition:.4s;
+z-index:9999;
+overflow-y:auto;
+}
+
+.sidebar.active{
+left:0;
+}
+
+.sidebar h2{
+background:#0b2c52;
+color:white;
+padding:20px;
+font-size:22px;
+}
+
+.sidebar a{
+display:block;
+padding:18px 20px;
+text-decoration:none;
+color:#333;
+border-bottom:1px solid #eee;
+font-weight:500;
+transition:.3s;
+}
+
+.sidebar a:hover{
+background:#0b2c52;
+color:white;
+padding-left:28px;
+}
+
+.close{
+position:absolute;
+top:18px;
+right:18px;
+font-size:28px;
+cursor:pointer;
+color:white;
+}
+
+/* HERO */
+
+.hero{
+position:relative;
+height:650px;
+margin-top:70px;
+overflow:hidden;
+}
+
+.hero img{
+width:100%;
+height:650px;
+object-fit:cover;
+display:block;
+}
+
+.overlay{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.45);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+color:#fff;
+}
+
+.overlay h1{
+font-size:52px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.overlay h2{
+font-size:28px;
+font-weight:400;
+letter-spacing:2px;
+margin-bottom:20px;
+}
+
+.overlay p{
+font-size:20px;
+max-width:750px;
+line-height:1.8;
+margin-bottom:30px;
+}
+
+.hero-buttons{
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+.book-btn{
+display:inline-block;
+background:#d4af37;
+color:#111;
+padding:16px 40px;
+border-radius:40px;
+text-decoration:none;
+font-size:18px;
+font-weight:700;
+transition:.3s;
+}
+
+.book-btn:hover{
+background:#fff;
+}
+
+.small-buttons{
+display:flex;
+justify-content:center;
+gap:15px;
+margin-top:18px;
+flex-wrap:wrap;
+}
+
+.small-btn{
+display:inline-block;
+padding:12px 24px;
+background:rgba(255,255,255,.18);
+border:1px solid rgba(255,255,255,.7);
+border-radius:30px;
+color:#fff;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+backdrop-filter:blur(8px);
+}
+
+.small-btn:hover{
+background:#fff;
+color:#0b2c52;
+}
+.section{
+padding:50px 20px;
+max-width:1100px;
+margin:auto;
+}
+
+.section h2{
+color:#0b2c52;
+margin-bottom:20px;
+font-size:30px;
+}
+
+.section p{
+line-height:1.8;
+font-size:17px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar" id="menu">
+
+<div class="close" onclick="closeMenu()">✕</div>
+
+<h2>HYATT REGENCY</h2>
+
+<a href="#">Home</a>
+<a href="#">About Hotel</a>
+<a href="#">Rooms</a>
+<a href="#">Dining</a>
+<a href="#">Amenities</a>
+<a href="#">Gallery</a>
+<a href="#">Location</a>
+<a href="#">Contact Us</a>
+
+</div>
+
+<!-- HEADER -->
+
+<header>
+<div class="menu-btn" onclick="window.location.href='landing.html'">
+    ☰
+</div>
+<div class="logo">
+HYATT REGENCY HOTEL
+</div>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<img src="https://images.unsplash.com/photo-1566073771259-6a8506099945" alt="Hyatt Regency Hotel">
+
+<div class="overlay">
+
+<h1>HYATT REGENCY HOTEL</h1>
+
+<h2>ROCHESTER, NEW YORK</h2>
+
+<p>
+Experience luxury, comfort and exceptional hospitality in the heart of downtown Rochester.
+</p>
+
+<div class="hero-buttons">
+
+<a href="https://hyattrochester.github.io/HYATT-REGENCY-HOTEL/second.html" class="book-btn">
+BOOK YOUR STAY
+</a>
+
+<div class="small-buttons">
+
+<a href="https://hyattrochester.github.io/HYATT-REGENCY-HOTEL/second.html" class="small-btn">
+Guest Login
+</a>
+
+<a href="https://hyattrochester.github.io/HYATT-REGENCY-HOTEL/second.html" class="small-btn">
+Careers
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<h2>Welcome to Hyatt Regency Rochester</h2>
+
+<p>
+
+Enjoy modern luxury, spacious rooms, fine dining, premium conference facilities and world-class customer service. Whether you're travelling for business or leisure, Hyatt Regency Rochester provides an unforgettable experience in a sophisticated atmosphere.
+
+</p>
+
+</section>
+<!-- IMAGE GALLERY -->
+
+<section class="section">
+
+<h2>Hotel Gallery</h2>
+
+<div class="slider">
+
+<img id="slide" src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa">
+
+</div>
+
+</section>
+
+<style>
+
+.slider{
+width:100%;
+height:450px;
+overflow:hidden;
+border-radius:18px;
+box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+
+.slider img{
+width:100%;
+height:450px;
+object-fit:cover;
+transition:1s;
+}
+
+/* LOCATION CARD */
+
+.location-card{
+background:white;
+padding:30px;
+border-radius:18px;
+margin-top:40px;
+box-shadow:0 8px 25px rgba(0,0,0,.1);
+}
+
+.location-card h2{
+color:#0b2c52;
+margin-bottom:15px;
+}
+
+.location-card p{
+line-height:1.8;
+font-size:17px;
+}
+
+/* CHAT BUTTON */
+
+.chat-btn{
+display:inline-block;
+margin-top:25px;
+background:#00b140;
+color:white;
+padding:16px 35px;
+border-radius:35px;
+text-decoration:none;
+font-weight:bold;
+transition:.3s;
+}
+
+.chat-btn:hover{
+background:#008b33;
+transform:scale(1.05);
+}
+
+/* HISTORY CARD */
+
+.history{
+margin-top:50px;
+background:white;
+padding:35px;
+border-radius:18px;
+box-shadow:0 8px 25px rgba(0,0,0,.1);
+}
+
+.history h2{
+color:#0b2c52;
+margin-bottom:15px;
+}
+
+.history p{
+line-height:1.9;
+font-size:17px;
+}
+
+</style>
+
+<!-- LOCATION -->
+
+<section class="section">
+
+<div class="location-card">
+
+<h2>📍 Location</h2>
+
+<p>
+
+HYATT REGENCY HOTEL, ROCHESTER is conveniently located in downtown Rochester, New York, USA, offering guests quick access to restaurants, entertainment venues, shopping, business centers, and popular local attractions.
+
+</p>
+
+<a href="https://maps.google.com" target="_blank" class="book-btn">
+</a>
+
+</div>
+
+<!-- CHAT BUTTON -->
+
+<div style="text-align:center;">
+
+<a href="https://tawk.to/chat/6a3b987a87243e1d38ec1405/1jrscn895" class="chat-btn">
+
+💬 CHAT WITH US
+
+</a>
+
+</div>
+
+<!-- HISTORY -->
+
+<div class="history">
+
+<h2>History & Overview</h2>
+
+<p>
+
+HYATT REGENCY HOTEL, ROCHESTER offers elegant accommodations, premium hospitality, modern meeting facilities, luxurious guest rooms, high-speed Wi-Fi, fitness amenities, exceptional dining, and outstanding customer service. Whether visiting for business or leisure, guests enjoy comfort, convenience, and a memorable stay in the heart of Rochester.
+
+</p>
+
+</div>
+
+</section>
+
+<script>
+
+const images=[
+
+"https://images.unsplash.com/photo-1551882547-ff40c63fe5fa",
+
+"https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
+
+"https://images.unsplash.com/photo-1445019980597-93fa8acb246c",
+
+"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+
+"https://images.unsplash.com/photo-1566073771259-6a8506099945"
+
+];
+
+let index=0;
+
+setInterval(function(){
+
+index++;
+
+if(index>=images.length){
+
+index=0;
+
+}
+
+document.getElementById("slide").src=images[index];
+
+},3500);
+
+</script>
+<!-- COLLAPSIBLE SECTIONS -->
+
+<style>
+
+.accordion{
+width:100%;
+background:#0b2c52;
+color:white;
+cursor:pointer;
+padding:18px 22px;
+margin-top:15px;
+font-size:18px;
+font-weight:600;
+border:none;
+border-radius:10px;
+text-align:left;
+transition:.3s;
+}
+
+.accordion:hover{
+background:#154a84;
+}
+
+.accordion:after{
+content:'+';
+float:right;
+font-size:24px;
+}
+
+.accordion.active:after{
+content:'−';
+}
+
+.panel{
+background:white;
+max-height:0;
+overflow:hidden;
+transition:max-height .4s ease;
+border-radius:0 0 10px 10px;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+.panel-content{
+padding:25px;
+line-height:1.9;
+font-size:16px;
+}
+
+.panel-content ul{
+padding-left:20px;
+}
+
+.panel-content li{
+margin-bottom:10px;
+}
+
+</style>
+
+<section class="section">
+
+<h2>Explore Our Hotel</h2>
+
+<button class="accordion">🏨 Our Hotel Services</button>
+
+<div class="panel">
+<div class="panel-content">
+
+<ul>
+
+<li>Luxury Guest Rooms</li>
+
+<li>24-Hour Front Desk</li>
+
+<li>High-Speed Wi-Fi</li>
+
+<li>Airport Shuttle</li>
+
+<li>Business Centre</li>
+
+<li>Fitness Centre</li>
+
+<li>Indoor Swimming Pool</li>
+
+<li>Laundry Service</li>
+
+<li>Room Service</li>
+
+<li>Daily Housekeeping</li>
+
+</ul>
+
+</div>
+</div>
+
+<button class="accordion">🛏 Room Types</button>
+
+<div class="panel">
+<div class="panel-content">
+
+<ul>
+
+<li>Standard King Room</li>
+
+<li>Double Queen Room</li>
+
+<li>Executive Suite</li>
+
+<li>Premium Suite</li>
+
+<li>Accessible Rooms</li>
+
+<li>Family Rooms</li>
+
+</ul>
+
+</div>
+</div>
+
+<button class="accordion">🍽 Dining & Restaurant</button>
+
+<div class="panel">
+<div class="panel-content">
+
+Enjoy freshly prepared breakfast, lunch and dinner, premium beverages, local and international cuisine, desserts, coffee, cocktails and 24-hour room dining service.
+
+</div>
+</div>
+
+<button class="accordion">⭐ Amenities</button>
+
+<div class="panel">
+<div class="panel-content">
+    <!-- FOOTER -->
+
+<footer>
+
+<div class="footer-container">
+
+<h2>HYATT REGENCY HOTEL, ROCHESTER</h2>
+
+<p>
+Luxury • Comfort • Exceptional Hospitality
+</p>
+
+<div class="socials">
+
+<a href="#">Facebook</a>
+
+<a href="#">Instagram</a>
+
+<a href="#">X</a>
+
+<a href="#">YouTube</a>
+
+</div>
+
+<p class="copyright">
+
+© 2026 Hyatt Regency Hotel, Rochester. All Rights Reserved.
+
+</p>
+
+</div>
+
+</footer>
+
+<!-- BACK TO TOP BUTTON -->
+
+<button id="topBtn" onclick="topFunction()">
+↑
+</button>
+
+<style>
+
+footer{
+background:#0b2c52;
+color:white;
+padding:50px 20px;
+margin-top:60px;
+text-align:center;
+}
+
+.footer-container h2{
+margin-bottom:10px;
+font-size:28px;
+}
+
+.footer-container p{
+margin:12px 0;
+line-height:1.8;
+}
+
+.socials{
+margin:25px 0;
+}
+
+.socials a{
+color:white;
+text-decoration:none;
+margin:0 12px;
+font-weight:bold;
+transition:.3s;
+}
+
+.socials a:hover{
+color:#d4af37;
+}
+
+#topBtn{
+
+display:none;
+position:fixed;
+bottom:25px;
+right:25px;
+width:55px;
+height:55px;
+border:none;
+border-radius:50%;
+background:#d4af37;
+color:black;
+font-size:24px;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,.3);
+transition:.3s;
+z-index:99999;
+
+}
+
+#topBtn:hover{
+
+transform:scale(1.1);
+
+}
+
+.fade{
+
+opacity:0;
+transform:translateY(40px);
+transition:1s;
+
+}
+
+.fade.show{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+</style>
+
+<script>
+
+/* MENU */
+
+function openMenu(){
+
+document.getElementById("menu").classList.add("active");
+
+}
+
+function closeMenu(){
+
+document.getElementById("menu").classList.remove("active");
+
+}
+
+/* BACK TO TOP */
+
+let topButton=document.getElementById("topBtn");
+
+window.onscroll=function(){
+
+if(document.body.scrollTop>300||document.documentElement.scrollTop>300){
+
+topButton.style.display="block";
+
+}else{
+
+topButton.style.display="none";
+
+}
+
+};
+
+/* TOP */
+
+function topFunction(){
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+}
+
+/* SCROLL ANIMATION */
+
+const observer=new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("show");
+
+}
+
+});
+
+});
+
+document.querySelectorAll(".section").forEach(sec=>{
+
+sec.classList.add("fade");
+
+observer.observe(sec);
+
+});
+
+</script>
+
+</body>
+
+</html>
