@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hyatt Regency Hotel Rochester</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f5f5f5;
+}
+
+header{
+background:#071d3d;
+color:white;
+padding:22px;
+display:flex;
+align-items:center;
+}
+
+.back{
+color:white;
+text-decoration:none;
+font-weight:600;
+border:2px solid white;
+padding:10px 22px;
+border-radius:30px;
+}
+
+.hero{
+
+background:#071d3d;
+color:white;
+padding:45px 25px;
+
+}
+
+.hero h1{
+
+font-size:34px;
+
+}
+
+.hero p{
+
+margin-top:10px;
+opacity:.9;
+
+}
+
+.gold{
+
+height:5px;
+background:#d4af37;
+
+}
+
+.container{
+
+padding:20px;
+
+}
+
+.accordion{
+
+background:white;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 8px 20px rgba(0,0,0,.12);
+
+}
+
+.item{
+
+border-bottom:1px solid #ececec;
+
+}
+
+.title{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:22px;
+cursor:pointer;
+font-size:21px;
+font-weight:600;
+color:#071d3d;
+
+}
+
+.content{
+
+display:none;
+padding:0 22px 22px;
+
+}
+
+.content a{
+
+display:block;
+text-decoration:none;
+color:#444;
+padding:14px 0;
+font-size:17px;
+border-bottom:1px solid #eee;
+
+}
+
+.content a:last-child{
+
+border:none;
+
+}
+
+.arrow{
+
+font-size:26px;
+color:#d4af37;
+
+}
+
+.show{
+
+display:block;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<a href="https://hyattrochester.github.io/HYATT-REGENCY-HOTEL/dashboard.html" class="back">
+
+← Back
+
+</a>
+
+</header>
+
+<div class="hero">
+
+<h1>HYATT REGENCY HOTEL</h1>
+
+<p>ROCHESTER</p>
+
+</div>
+
+<div class="gold"></div>
+
+<div class="container">
+
+<div class="accordion">
+
+    <!-- ABOUT US -->
+
+<div class="item">
+
+<div class="title" onclick="toggleMenu('about')">
+
+<span>About Us</span>
+
+<span class="arrow">▼</span>
+
+</div>
+
+<div class="content" id="about">
+
+<a href="https://hyattrochester.github.io/HYATT-REGENCY-HOTEL/about.html">About Hyatt Regency Hotel Rochester</a>
+
+
+
+</div>
+
+</div>
+
+<!-- ROOMS & SUITES -->
+
+<div class="item">
+
+<div class="title" onclick="toggleMenu('rooms')">
+
+<span>Rooms & Suites</span>
+
+<span class="arrow">▼</span>
+
+</div>
+
+<div class="content" id="rooms">
+
+<a href="https://hyattrochester.github.io/HYATT-REGENCY-HOTEL/rooms.html">VIEW ROOMS & SUITES</a>
+
+
+</div>
+
+</div>
+
+<!-- DINING -->
+
+<div class="item">
+
+<div class="title" onclick="toggleMenu('dining')">
+
+<span>Dining</span>
+
+<span class="arrow">▼</span>
+
+</div>
+
+<div class="content" id="dining">
+
+<a href="https://hyattrochester.github.io/HYATT-REGENCY-HOTEL/dining.html">VIEW OUR DINING</a>
+
+
+</div>
+
+</div>
+<!-- CAREERS -->
+
+<div class="item">
+
+<div class="title" onclick="toggleMenu('careers')">
+
+<span>Careers</span>
+
+<span class="arrow">▼</span>
+
+</div>
+
+<div class="content" id="careers">
+
+<a href="https://hyattrochester.github.io/HYATT-REGENCY-HOTEL/second.html">Current Vacancies</a>
+
+</div>
+
+</div>
+
+<!-- LOGIN / JOB APPLICATION -->
+
+<div class="item">
+
+<div class="title" onclick="toggleMenu('login')">
+
+<span>Login / Job Application</span>
+
+<span class="arrow">▼</span>
+
+</div>
+
+<div class="content" id="login">
+
+<a href="https://hyattrochester.github.io/HYATT-REGENCY-HOTEL/second.html">Applicant Login</a>
+
+
+
+
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+function toggleMenu(id){
+
+const content=document.getElementById(id);
+
+if(content.classList.contains("show")){
+
+content.classList.remove("show");
+
+}else{
+
+document.querySelectorAll(".content").forEach(function(item){
+item.classList.remove("show");
+});
+
+content.classList.add("show");
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
