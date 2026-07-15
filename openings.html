@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Openings - Hyatt Careers</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-gold: #c5a880;
+            --text-green: #4ade80;
+            --text-green-muted: #a7f3d0;
+            --border-green: rgba(74, 222, 128, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem 1rem;
+        }
+
+        .top-bar {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-btn {
+            background: transparent;
+            text-decoration: none;
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            border-color: var(--text-green);
+            color: var(--text-green);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            max-width: 700px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 0.6rem;
+        }
+
+        header p {
+            color: var(--accent-gold);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 500;
+        }
+
+        .onboarding-banner {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-green);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background: rgba(34, 197, 94, 0.1);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            border: 1px solid var(--border-green);
+            display: inline-block;
+        }
+
+        .jobs-grid {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .job-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .job-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-green);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .job-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .job-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .job-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+        }
+
+        .tag-slots {
+            background: rgba(197, 168, 128, 0.15);
+            color: var(--accent-gold);
+            border: 1px solid rgba(197, 168, 128, 0.2);
+        }
+
+        .tag-preference {
+            background: rgba(74, 222, 128, 0.12);
+            color: var(--text-green);
+            border: 1px solid var(--border-green);
+        }
+
+        .requirements-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 800;
+            margin-bottom: 0.6rem;
+        }
+
+        .requirements-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .requirements-list li {
+            font-size: 0.92rem;
+            color: rgba(248, 250, 252, 0.85);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .requirements-list li::before {
+            content: "•";
+            color: var(--text-green);
+            font-weight: bold;
+        }
+
+        .apply-link {
+            color: #0f172a;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px;
+            border-radius: 35px;
+            background: var(--text-green);
+            border: 1px solid var(--text-green);
+            transition: all 0.2s ease;
+            margin-top: auto;
+            letter-spacing: 0.02em;
+        }
+
+        .apply-link:hover {
+            background: #22c55e;
+            border-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        }
+
+        @media (max-width: 850px) {
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+            .job-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="portal.html" class="back-btn">← Back to Portal</a>
+    </div>
+
+    <header>
+        <h1>Career Opportunities</h1>
+        <p>Hyatt Regency Hotel Rochester</p>
+        <div class="onboarding-banner">⚡ Positions open for immediate start post-onboarding</div>
+    </header>
+
+    <div class="jobs-grid">
+        
+        <!-- Job 1: Waiters -->
+        <div class="job-card">
+            <div class="job-header">
+                <h2 class="job-title">Food & Beverage Waiter / Waitress</h2>
+                <div class="job-meta">
+                    <span class="tag tag-slots">10 Openings</span>
+                    <span class="tag tag-preference">8 Positions Preferred Female</span>
+                </div>
+                <div class="requirements-title"> Requirements</div>
+                <ul class="requirements-list">
+                    <li>Warm, welcoming personality and excellent communication skills.</li>
+                    <li>Ability to present menus, take accurate orders, and serve efficiently.</li>
+                    <li>Basic understanding of professional table setups and hospitality standards.</li>
+                    <li>Strong team player capable of handling high-volume dining shifts.</li>
+                </ul>
+            </div>
+            <a href="resume.html?role=waiter" class="apply-link">Apply Now</a>
+        </div>
+
+        <!-- Job 2: Receptionist -->
+        <div class="job-card">
+            <div class="job-header">
+                <h2 class="job-title">Front Desk Receptionist</h2>
+                <div class="job-meta">
+                    <span class="tag tag-slots">5 Openings</span>
+                    <span class="tag tag-preference">4 Positions Preferred Female</span>
+                </div>
+                <div class="requirements-title"> Requirements</div>
+                <ul class="requirements-list">
+                    <li>Polished presentation, grooming, and fluent spoken English language skills.</li>
+                    <li>Proficiency managing standard front-desk check-in systems and reservation data.</li>
+                    <li>Excellent telephone etiquette and problem-solving abilities.</li>
+                    <li>Strong administrative organization to handle incoming emails and requests.</li>
+                </ul>
+            </div>
+            <a href="resume.html?role=receptionist" class="apply-link">Apply Now</a>
+        </div>
+
+        <!-- Job 3: Housekeepers -->
+        <div class="job-card">
+            <div class="job-header">
+                <h2 class="job-title">Room & Housekeeping Attendant</h2>
+                <div class="job-meta">
+                    <span class="tag tag-slots">15 Openings</span>
+                    <span class="tag tag-preference">Open to All Genders</span>
+                </div>
+                <div class="requirements-title">Requirements</div>
+                <ul class="requirements-list">
+                    <li>High attention to structural detail and exceptional cleanliness standards.</li>
+                    <li>Responsible for cleaning rooms, changing luxury linens, and dusting furniture.</li>
+                    <li>Physical stamina to stay active and manage rooms across scheduled hotel wings.</li>
+                    <li>Respectful handling of guest belongings and overall suite integrity.</li>
+                </ul>
+            </div>
+            <a href="resume.html?role=housekeeper" class="apply-link">Apply Now</a>
+        </div>
+
+        <!-- Job 4: Bell Boy -->
+        <div class="job-card">
+            <div class="job-header">
+                <h2 class="job-title">Guest Service Bell Boy</h2>
+                <div class="job-meta">
+                    <span class="tag tag-slots">1 Opening</span>
+                    <span class="tag tag-preference">Male Preferred</span>
+                </div>
+                <div class="requirements-title"> Requirements</div>
+                <ul class="requirements-list">
+                    <li>Energetic, physically fit, and capable of safely lifting heavy guest luggage.</li>
+                    <li>Welcoming demeanor to escort arriving guests up to designated rooms smoothly.</li>
+                    <li>Knowledgeable about hotel landmarks and amenities to provide immediate guidance.</li>
+                    <li>Proactive and helpful attitude at the lobby and entrance terminals.</li>
+                </ul>
+            </div>
+            <a href="resume.html?role=bellboy" class="apply-link">Apply Now</a>
+        </div>
+
+        <!-- Job 5: Pool Attendant -->
+        <div class="job-card">
+            <div class="job-header">
+                <h2 class="job-title">Swimming Pool Attendant</h2>
+                <div class="job-meta">
+                    <span class="tag tag-slots">1 Opening</span>
+                    <span class="tag tag-preference">Open to All Genders</span>
+                </div>
+                <div class="requirements-title"> Requirements</div>
+                <ul class="requirements-list">
+                    <li>Outstanding swimming capability paired with fundamental life-saving/first-aid skills.</li>
+                    <li>Monitor the pool landscape to enforce safety rules and maintain a secure arena.</li>
+                    <li>Manage towel distributions and organize clean deck seating configurations.</li>
+                    <li>Friendly customer service nature to engage confidently with guests.</li>
+                </ul>
+            </div>
+            <a href="resume.html?role=poolattendant" class="apply-link">Apply Now</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
