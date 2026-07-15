@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyatt Application Portal</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-gold: #c5a880;
+            
+            /* Premium Green Theme Variables */
+            --status-green-bg: rgba(34, 197, 94, 0.15);
+            --text-green: #4ade80;
+            --text-green-muted: #a7f3d0;
+            --border-green: rgba(74, 222, 128, 0.3);
+            
+            /* Premium Red Theme Variables */
+            --status-red-bg: rgba(239, 68, 68, 0.15);
+            --text-red: #f87171;
+            --border-red: rgba(248, 113, 113, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .top-bar {
+            width: 100%;
+            max-width: 650px;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            border-color: var(--text-green);
+            color: var(--text-green);
+        }
+
+        .portal-container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-size: 1.15rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 0.6rem;
+            font-weight: 800;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .info-group.full-width {
+            grid-column: span 2;
+        }
+
+        .label {
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 700;
+        }
+
+        .value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-green);
+            min-height: 1.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            transition: all 0.3s ease;
+        }
+
+        .status-badge.red-status {
+            background: var(--status-red-bg);
+            color: var(--text-red);
+            border: 1px solid var(--border-red);
+        }
+
+        .status-badge.green-status {
+            background: var(--status-green-bg);
+            color: var(--text-green);
+            border: 1px solid var(--border-green);
+        }
+
+        .info-center {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .center-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .center-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-green);
+        }
+
+        .center-card-text {
+            flex: 1;
+        }
+
+        .center-card-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+            color: var(--text-green);
+        }
+
+        .center-card-text p {
+            font-size: 0.88rem;
+            color: var(--text-green-muted);
+        }
+
+        .info-link {
+            color: #0f172a;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 30px;
+            background: var(--text-green);
+            border: 1px solid var(--text-green);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .info-link:hover {
+            background: #22c55e;
+            border-color: #22c55e;
+            transform: scale(1.03);
+        }
+
+        @media (max-width: 480px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            .info-group.full-width {
+                grid-column: span 1;
+            }
+            .center-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.25rem;
+            }
+            .info-link {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <button class="logout-btn" id="logoutBtn">Log Out</button>
+    </div>
+
+    <div class="portal-container">
+        <header>
+            <h1>Hyatt</h1>
+            <p>Application Portal</p>
+        </header>
+
+        <main>
+            <!-- Applicant Details Section -->
+            <div class="section-title">Applicant Profile</div>
+            <div class="profile-grid">
+                
+                <div class="info-group full-width">
+                    <span class="label">Applicant Name</span>
+                    <span class="value" id="applicant-name">Loading...</span>
+                </div>
+
+                <div class="info-group">
+                    <span class="label">Phone Number</span>
+                    <span class="value" id="phone-number">Loading...</span>
+                </div>
+
+                <div class="info-group">
+                    <span class="label">Date Applied</span>
+                    <span class="value" id="date-applied"></span>
+                </div>
+
+                <div class="info-group">
+                    <span class="label">Application Code</span>
+                    <span class="value" id="application-code" style="font-family: monospace; letter-spacing: 1px;"></span>
+                </div>
+
+                <div class="info-group">
+                    <span class="label">Application Status</span>
+                    <div>
+                        <span class="status-badge" id="application-status">Loading...</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Information Center Section -->
+            <div class="section-title">Information & Process Center</div>
+            <div class="info-center">
+                
+                <!-- CARD 1: Clean Information Center -->
+                <div class="center-card">
+                    <div class="center-card-text">
+                        <h3>Information Center</h3>
+                        <p id="info-message">Important processing documentation and status instructions will appear here.</p>
+                    </div>
+                    <a href="#" class="info-link" id="info-link-btn" style="display: none;">View Info</a>
+                </div>
+
+                <!-- CARD 2: Job Openings pointing safely to openings.html -->
+                <div class="center-card">
+                    <div class="center-card-text">
+                        <h3>Job Application</h3>
+                        <p>Explore current career openings and submit documents to your qualified/ interested field.</p>
+                    </div>
+                    <!-- Hidden/disabled until Firebase confirms the endpoint -->
+                    <a href="#" class="info-link" id="apply-link-btn" style="opacity: 0.5; pointer-events: none;">Apply Now</a>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase System Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import {
+    getFirestore,
+    doc,
+    onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCsZbX8doOr6DxT7C9p8SK6YReKKlyVcNI",
+            authDomain: "hyatt-regency-afc7e.firebaseapp.com",
+            projectId: "hyatt-regency-afc7e",
+            storageBucket: "hyatt-regency-afc7e.firebasestorage.app",
+            messagingSenderId: "636460619228",
+            appId: "1:636460619228:web:5734324ff28ca738f4eb19",
+            measurementId: "G-K5KTLSKDRN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const userDocRef = doc(db, "Applicants", user.uid);
+
+
+// Applicant information
+onSnapshot(userDocRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.data();
+
+                        // 1. Core Profile Sync
+                        document.getElementById("applicant-name").innerText = data.fullName || "N/A";
+                        document.getElementById("phone-number").innerText = data.phone || "N/A";
+                        document.getElementById("application-code").innerText = data.applicationCode || "PENDING";
+                        document.getElementById("date-applied").innerText = data.dateApplied || "NOT SUBMITTED";
+
+                        // 2. Status Color Formatting Logic
+                        const statusText = data.applicationStatus || "No application found";
+                        const statusBadge = document.getElementById("application-status");
+                        statusBadge.innerText = statusText;
+
+                        if (statusText.trim().toLowerCase() === "no application found") {
+                            statusBadge.classList.add("red-status");
+                            statusBadge.classList.remove("green-status");
+                        } else {
+                            statusBadge.classList.add("green-status");
+                            statusBadge.classList.remove("red-status");
+                        }
+// Save applicant data for later use
+window.currentApplicantData = data;
+// Applicant-specific Information Center
+document.getElementById("info-message").innerText =
+    data.infoMessage ||
+    "Important processing documentation and status instructions will appear here.";
+
+const infoLinkBtn = document.getElementById("info-link-btn");
+
+if (data.infoLink) {
+    infoLinkBtn.href = data.infoLink;
+    infoLinkBtn.target = "_blank";
+    infoLinkBtn.style.display = "inline-flex";
+} else {
+    infoLinkBtn.style.display = "none";
+}
+
+// Apply button (same for everyone)
+const applyLinkBtn = document.getElementById("apply-link-btn");
+applyLinkBtn.href = "openings.html";
+applyLinkBtn.removeAttribute("target");
+applyLinkBtn.style.opacity = "1";
+applyLinkBtn.style.pointerEvents = "auto";
+                    }
+                }, (error) => {
+                    console.error("Database tracking link disruption:", error);
+                });
+
+
+            } else {
+                window.location.href = "index.html"; 
+            }
+        });
+
+        document.getElementById("logoutBtn").onclick = async () => {
+            try {
+                await signOut(auth);
+                window.location.href = "second.html";
+            } catch (error) {
+                console.error("Log out tracking exception:", error);
+            }
+        };
+    </script>
+</body>
+</html>
