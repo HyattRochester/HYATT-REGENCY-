@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Hyatt Regency Rochester</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* 
+               Luxury hotel backdrop with a dark linear-gradient overlay 
+               to keep the golden text sharp and highly legible.
+            */
+            background: linear-gradient(rgba(13, 17, 26, 0.75), rgba(13, 17, 26, 0.75)), 
+                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Cinzel', 'Playfair Display', 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Subtle ambient background glow */
+        .background-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Splash Content Wrapper */
+        .splash-container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Luxury Logo Icon Animation */
+        .logo-mark {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px auto;
+            border: 2px solid #d4af37;
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInLogo 1s ease-out forwards;
+        }
+
+        .logo-mark::before {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background: rgba(212, 175, 55, 0.3);
+        }
+
+        /* Brand Subtitle */
+        .brand-sub {
+            color: #a3a8b3;
+            font-size: 11px;
+            letter-spacing: 7px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInText 1.2s ease-out 0.3s forwards;
+        }
+
+        /* Main Luxurious Multi-Color Zooming Typography */
+        .animated-heading {
+            font-size: 2.8rem;
+            font-weight: 400;
+            line-height: 1.4;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #d4af37; /* Final luxury gold */
+        }
+
+        .animated-heading span {
+            display: inline-block;
+            opacity: 0;
+            /* 
+               Animation Breakdown:
+               Starts massive (zoomed in), shifts through vivid colors, 
+               and scales down (zooms out) into its final gold position.
+            */
+            animation: zoomOutColorEffect 2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+
+        /* Staggering the animation for each word line to look sophisticated */
+        .line-1 span { animation-delay: 0.5s; }
+        .line-2 span { animation-delay: 0.8s; }
+        .line-3 span { animation-delay: 1.1s; }
+
+        /* Tagline */
+        .tagline {
+            color: #e0e0e0;
+            font-size: 14px;
+            font-style: italic;
+            letter-spacing: 2px;
+            margin-top: 35px;
+            opacity: 0;
+            animation: fadeInText 1.5s ease-out 1.5s forwards;
+        }
+
+        /* Progress Loader Bar for visual cue */
+        .loader-bar {
+            width: 150px;
+            height: 1px;
+            background: rgba(212, 175, 55, 0.2);
+            margin: 40px auto 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-bar::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: #d4af37;
+            animation: loadTime 4s linear forwards;
+        }
+
+        /* --- ANIMATION KEYFRAMES --- */
+
+        @keyframes fadeInLogo {
+            0% { transform: rotate(0deg) scale(0.5); opacity: 0; }
+            100% { transform: rotate(45deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeInText {
+            to { opacity: 1; }
+        }
+
+        @keyframes loadTime {
+            to { width: 100%; }
+        }
+
+        @keyframes zoomOutColorEffect {
+            0% {
+                transform: scale(3.5); /* Massive Zoomed In */
+                filter: blur(12px);
+                opacity: 0;
+                color: #00f0ff; /* Electric Sapphire Cyan */
+                text-shadow: 0 0 30px #ff0055, 0 0 60px #00f0ff;
+            }
+            35% {
+                opacity: 1;
+                color: #ff0055; /* Vivid Ruby Crimson */
+                text-shadow: 0 0 25px #00ffaa, 0 0 50px #ff0055;
+            }
+            65% {
+                color: #00ffaa; /* Deep Emerald */
+                text-shadow: 0 0 20px #d4af37, 0 0 40px #00ffaa;
+            }
+            100% {
+                transform: scale(1); /* Zoomed Out to True Size */
+                filter: blur(0);
+                opacity: 1;
+                color: #d4af37; /* Classic Hyatt Gold */
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+            }
+        }
+
+        /* Responsive scaling for mobile devices */
+        @media (max-width: 768px) {
+            .animated-heading { font-size: 1.8rem; letter-spacing: 2px; }
+            .brand-sub { letter-spacing: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-glow"></div>
+
+    <div class="splash-container">
+        <!-- Luxury Crest -->
+        <div class="logo-mark"></div>
+        <p class="brand-sub">Hyatt Regency</p>
+
+        <!-- Staggered Zoom Text -->
+        <h1 class="animated-heading">
+            <div class="line-1"><span>Luxury</span></div>
+            <div class="line-2"><span>Hotel</span></div>
+            <div class="line-3"><span>Rochester</span></div>
+        </h1>
+
+        <p class="tagline">Unlock the Exceptional</p>
+
+        <!-- Subtle loading indicator -->
+        <div class="loader-bar"></div>
+    </div>
+
+    <script>
+        // Set the duration constraint (4000 milliseconds = 4 seconds)
+        const displayDuration = 4000; 
+        
+        // Define your main website homepage destination here
+        const destinationURL = "https://hyattrochester.github.io/HYATT-REGENCY-/"; 
+
+        setTimeout(() => {
+            // Smoothly fade out body before redirecting
+            document.body.style.transition = "opacity 0.5s ease";
+            document.body.style.opacity = "0";
+            
+            setTimeout(() => {
+                window.location.href = destinationURL;
+            }, 500);
+            
+        }, displayDuration - 500); // Triggers slightly early to accommodate the fade out window
+    </script>
+</body>
+</html>
