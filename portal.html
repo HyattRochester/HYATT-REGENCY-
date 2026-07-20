@@ -397,8 +397,14 @@ if (data.infoLink) {
 
 // Apply button (same for everyone)
 const applyLinkBtn = document.getElementById("apply-link-btn");
-applyLinkBtn.href = "openings.html";
-applyLinkBtn.removeAttribute("target");
+
+if (data.occupation) {
+    applyLinkBtn.href = "interview.html";
+    applyLinkBtn.style.opacity = "1";
+    applyLinkBtn.style.pointerEvents = "auto";
+} else {
+    applyLinkBtn.style.display = "none";
+}
 applyLinkBtn.style.opacity = "1";
 applyLinkBtn.style.pointerEvents = "auto";
                     }
@@ -422,4 +428,3 @@ applyLinkBtn.style.pointerEvents = "auto";
         };
     </script>
 </body>
-</html>
