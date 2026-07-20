@@ -460,8 +460,15 @@
 <!-- Script configuration running inside an active ES Module to load Firebase -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+   import {
+    getFirestore,
+    collection,
+    doc,
+    getDoc,
+    setDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+       import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
     // Extracted target project environment coordinates
     const firebaseConfig = {
@@ -601,20 +608,32 @@ try {
         try {
             // Push elements smoothly up to Firestore Database records tracking configurations
             console.log(auth.currentUser);
-            await addDoc(collection(db, "Interviews"), {
-                uid: loggedInUserUid,
-                fullName: applicantName,
-                appliedPosition: role,
-                responses: {
-                    q1: answer1,
-                    q2: answer2,
-                    q3: answer3,
-                    q4: answer4,
-                    q5: answer5
-                },
-                timestamp: serverTimestamp()
-            });
+            const interviewRef = doc(db, "Interviews", loggedInUserUid);
 
+// Check if the interview was already submitted
+const interviewSnap = await getDoc(interviewRef);
+
+if (interviewSnap.exists()) {
+    alert("INTERVIEW COMPLETED! You have already submitted your interview.");
+    submitBtn.disabled = false;
+    submitBtn.innerText = "SUBMIT ASSESSMENT";
+    return;
+}
+
+// Save the interview
+await setDoc(interviewRef, {
+    uid: loggedInUserUid,
+    fullName: applicantName,
+    appliedPosition: role,
+    responses: {
+        q1: answer1,
+        q2: answer2,
+        q3: answer3,
+        q4: answer4,
+        q5: answer5
+    },
+    timestamp: serverTimestamp()
+});
             // Transition UI framework environments
             document.getElementById('interviewForm').style.display = 'none';
             document.getElementById('progressContainer').style.display = 'none';
