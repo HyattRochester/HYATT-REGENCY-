@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyatt Regency Hotel Recruitment Portal</title>
+    <style>
+        :root {
+            --primary-gold: #c5a059;
+            --primary-gold-hover: #b38f48;
+            --btn-green: #10b981;
+            --btn-green-hover: #059669;
+            --bg-dark: #0f141c;
+            --card-bg: #1a222f;
+            --text-light: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #2e3b4e;
+            
+            /* Bright 💚 Green Palette */
+            --bright-green: #00e676; 
+            --bright-green-hover: #00c853;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .portal-container {
+            width: 100%;
+            max-width: 680px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .header h1 span {
+            color: var(--primary-gold);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .progress-container.active-progress {
+            display: flex;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 2px;
+            background-color: var(--border-color);
+            width: 100%;
+            z-index: 1;
+        }
+
+        .progress-line-fill {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 2px;
+            background-color: var(--primary-gold);
+            width: 0%;
+            z-index: 2;
+            transition: width 0.4s ease;
+        }
+
+        .step-dot {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            z-index: 3;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .step-dot.active {
+            border-color: var(--primary-gold);
+            color: var(--primary-gold);
+            background-color: var(--bg-dark);
+            box-shadow: 0 0 10px rgba(197, 160, 89, 0.2);
+        }
+
+        .step-dot.completed {
+            background-color: var(--primary-gold);
+            border-color: var(--primary-gold);
+            color: var(--bg-dark);
+        }
+
+        /* Interview Steps */
+        .interview-step {
+            display: none;
+            animation: fadeInPage 0.5s ease forwards;
+        }
+
+        .interview-step.active {
+            display: block;
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .rules-title {
+            font-size: 1.1rem;
+            color: var(--primary-gold);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .rules-box {
+            background-color: rgba(15, 20, 28, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .rules-box ul {
+            list-style-type: none;
+        }
+
+        .rules-box li {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #d1d5db;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .rules-box li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--primary-gold);
+            font-size: 0.8rem;
+            top: 1px;
+        }
+
+        .question-label {
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            display: block;
+            line-height: 1.5;
+            color: #e5e7eb;
+        }
+
+        .textarea-input {
+            width: 100%;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-light);
+            padding: 14px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .textarea-input:focus {
+            border-color: var(--primary-gold);
+        }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .role-option {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .role-option:hover {
+            border-color: var(--primary-gold);
+            background-color: rgba(197, 160, 89, 0.05);
+        }
+
+        .role-option.selected {
+            border-color: var(--primary-gold);
+            background-color: var(--primary-gold);
+            color: var(--bg-dark);
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .button-group {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-start {
+            background-color: var(--bright-green);
+            border: 1px solid var(--bright-green);
+            color: var(--bg-dark);
+            text-align: center;
+            padding: 12px 28px;
+        }
+
+        .btn-start:hover {
+            background-color: var(--bright-green-hover);
+            border-color: var(--bright-green-hover);
+        }
+
+        .btn-next, .btn-submit {
+            background-color: var(--primary-gold);
+            border: 1px solid var(--primary-gold);
+            color: var(--bg-dark);
+            margin-left: auto;
+        }
+
+        .btn-next:hover, .btn-submit:hover {
+            background-color: var(--primary-gold-hover);
+            border-color: var(--primary-gold-hover);
+        }
+
+        .btn-prev {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .btn-prev:hover {
+            border-color: var(--text-muted);
+            color: var(--text-light);
+        }
+
+        /* Success Screen (Vibrant 💚 theme) */
+        .success-screen {
+            text-align: center;
+            padding: 40px 20px;
+            display: none;
+            animation: fadeInPage 0.5s ease forwards;
+        }
+
+        .success-icon {
+            font-size: 4.5rem;
+            color: var(--bright-green);
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        .success-screen h2 {
+            margin-bottom: 18px;
+            font-weight: 700;
+            color: var(--bright-green);
+            letter-spacing: 1px;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+        }
+
+        .success-screen p {
+            color: var(--bright-green);
+            line-height: 1.6;
+            font-size: 1.1rem;
+            max-width: 540px;
+            margin: 0 auto 30px auto;
+            opacity: 0.95;
+        }
+
+        .btn-redirect {
+            background-color: var(--bright-green);
+            border: 1px solid var(--bright-green);
+            color: var(--bg-dark);
+        }
+
+        .btn-redirect:hover {
+            background-color: var(--bright-green-hover);
+            border-color: var(--bright-green-hover);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 500px) {
+            .role-grid {
+                grid-template-columns: 1fr;
+            }
+            .portal-container {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="portal-container">
+    <div class="header">
+        <h1>Hyatt Regency <span>Recruitment Portal</span></h1>
+    </div>
+
+    <div class="progress-container" id="progressContainer">
+        <div class="progress-line"><div class="progress-line-fill" id="progressFill"></div></div>
+        <div class="step-dot active">1</div>
+        <div class="step-dot">2</div>
+        <div class="step-dot">3</div>
+        <div class="step-dot">4</div>
+        <div class="step-dot">5</div>
+    </div>
+
+    <form id="interviewForm" onsubmit="submitInterview(event)">
+        
+        <!-- PAGE 1: Hyatt Rules & Role Selection -->
+        <div class="interview-step active" data-step="1">
+            <div class="rules-title">Hyatt Recruitment Rules & Guidelines</div>
+            <div class="rules-box">
+                <ul>
+                    <li><strong>Integrity & Professionalism:</strong> All responses must reflect honest experiences and a commitment to 5-star hospitality standards.</li>
+                    <li><strong>Complete Focus:</strong> Ensure you complete all 5 assessment questions in one sitting without refreshing the page.</li>
+                    <li><strong>Confidentiality:</strong> Scenario details and internal procedures discussed during this evaluation remain strictly confidential.</li>
+                    <li><strong>Timely Submission:</strong> Review your answers thoroughly before final submission to ensure clear articulation.</li>
+                </ul>
+            </div>
+
+            <label class="question-label" style="font-size: 1rem; margin-bottom: 10px;">Select the primary position you are applying for:</label>
+            <div class="role-grid">
+                <div class="role-option" onclick="selectRole(this, 'Housekeeping')">Housekeeping Professional</div>
+                <div class="role-option" onclick="selectRole(this, 'Waiter')">Food & Beverage Waiter</div>
+                <div class="role-option" onclick="selectRole(this, 'Bell Boy')">Guest Services / Bell Boy</div>
+                <div class="role-option" onclick="selectRole(this, 'Receptionist')">Front Desk Receptionist</div>
+            </div>
+            <input type="hidden" id="selectedRole" name="role" required>
+
+            <div class="button-group" style="margin-top: 25px;">
+                <button type="button" class="btn btn-prev" onclick="history.back()">Back</button>
+                <button type="button" class="btn btn-start" onclick="navigateStep(1)">Start Your Interview</button>
+            </div>
+        </div>
+
+        <!-- PAGE 2: Question 1 -->
+        <div class="interview-step" data-step="2">
+            <label class="question-label" for="q1">1. A guest approaches you with an urgent complaint regarding their hospitality experience. Walk us through your immediate steps to handle and de-escalate the situation.</label>
+            <textarea class="textarea-input" id="q1" name="q1_response" placeholder="Type your response here..." required></textarea>
+        </div>
+
+        <!-- PAGE 3: Question 2 -->
+        <div class="interview-step" data-step="3">
+            <label class="question-label" for="q2">2. Hyatt Regency maintains a reputation for immaculate, luxury 5-star service. How do you ensure your specific daily tasks reflect these elite quality standards?</label>
+            <textarea class="textarea-input" id="q2" name="q2_response" placeholder="Type your response here..." required></textarea>
+        </div>
+
+        <!-- PAGE 4: Question 3 -->
+        <div class="interview-step" data-step="4">
+            <label class="question-label" for="q3">3. Hospitality settings can change instantly during peak hours. Describe a time you had to adapt quickly to high-pressure scenarios or help out a busy teammate.</label>
+            <textarea class="textarea-input" id="q3" name="q3_response" placeholder="Type your response here..." required></textarea>
+        </div>
+
+        <!-- PAGE 5: Question 4 -->
+        <div class="interview-step" data-step="5">
+            <label class="question-label" for="q4">4. What draws you to join the legacy of the Hyatt Regency brand specifically, and how do your professional values match ours?</label>
+            <textarea class="textarea-input" id="q4" name="q4_response" placeholder="Type your response here..." required></textarea>
+        </div>
+
+        <!-- PAGE 6: Question 5 -->
+        <div class="interview-step" data-step="6">
+            <label class="question-label" for="q5">5. How do you handle constructive feedback from a supervisor or manager regarding your service delivery?</label>
+            <textarea class="textarea-input" id="q5" name="q5_response" placeholder="Type your response here..." required></textarea>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-group" id="questionButtonGroup" style="display: none;">
+            <button type="button" class="btn btn-prev" id="prevBtn" onclick="navigateStep(-1)">Back</button>
+            <button type="button" class="btn btn-next" id="nextBtn" onclick="navigateStep(1)">Next Question</button>
+            <button type="submit" class="btn btn-submit" id="submitBtn" style="display: none;">Submit Assessment</button>
+        </div>
+    </form>
+
+    <!-- Success Output View -->
+    <div class="success-screen" id="successScreen">
+        <div class="success-icon">✓</div>
+        <h2>SUCCESSFULLY SUBMITTED</h2>
+        <p>Thank you for completing your interview assessment. The Hyatt Regency Human Resources team will review your submissions and follow up via your registered communication channels.</p>
+        
+        <!-- REDIRECT LINK: Change the href="..." below to your desired target destination link -->
+        <a href="https://www.hyatt.com" class="btn btn-redirect">Return to Home</a>
+    </div>
+</div>
+
+<!-- Script configuration running inside an active ES Module to load Firebase -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    // Extracted target project environment coordinates
+    const firebaseConfig = {
+        apiKey: "AIzaSyCsZbX8doOr6DxT7C9p8SK6YReKKlyVcNI",
+        authDomain: "hyatt-regency-afc7e.firebaseapp.com",
+        projectId: "hyatt-regency-afc7e",
+        storageBucket: "hyatt-regency-afc7e.firebasestorage.app",
+        messagingSenderId: "636460619228",
+        appId: "1:636460619228:web:5734324ff28ca738f4eb19",
+        measurementId: "G-K5KTLSKDRN"
+    };
+
+    // Global Initializations
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    let currentStep = 1;
+    const totalSteps = 6;
+    let loggedInUserUid = "anonymous";
+
+    // Listen for current system context state matching to assign records correctly
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            loggedInUserUid = user.uid;
+        }
+    });
+
+    function updateProgress() {
+        const progressContainer = document.getElementById('progressContainer');
+        const questionButtonGroup = document.getElementById('questionButtonGroup');
+
+        if (currentStep === 1) {
+            progressContainer.classList.remove('active-progress');
+            questionButtonGroup.style.display = 'none';
+        } else {
+            progressContainer.classList.add('active-progress');
+            questionButtonGroup.style.display = 'flex';
+
+            const questionIndex = currentStep - 2;
+            const totalQuestions = 5;
+            const fillPercent = (questionIndex / (totalQuestions - 1)) * 100;
+            document.getElementById('progressFill').style.width = fillPercent + '%';
+
+            const dots = document.querySelectorAll('.step-dot');
+            dots.forEach((dot, index) => {
+                if (index < questionIndex) {
+                    dot.classList.add('completed');
+                    dot.classList.remove('active');
+                } else if (index === questionIndex) {
+                    dot.classList.add('active');
+                    dot.classList.remove('completed');
+                } else {
+                    dot.classList.remove('active', 'completed');
+                }
+            });
+        }
+    }
+
+    function selectRole(element, roleName) {
+        document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
+        element.classList.add('selected');
+        document.getElementById('selectedRole').value = roleName;
+    }
+
+    function validateCurrentStep() {
+        if (currentStep === 1) {
+            const roleChosen = document.getElementById('selectedRole').value;
+            if (!roleChosen) {
+                alert("Please select a professional role to start your interview.");
+                return false;
+            }
+            return true;
+        }
+
+        const currentTextArea = document.querySelector(`.interview-step[data-step="${currentStep}"] textarea`);
+        if (currentTextArea && currentTextArea.value.trim() === "") {
+            alert("Please provide a response before proceeding to the next page.");
+            return false;
+        }
+        return true;
+    }
+
+    function navigateStep(direction) {
+        if (direction === 1 && !validateCurrentStep()) return;
+
+        document.querySelector(`.interview-step[data-step="${currentStep}"]`).classList.remove('active');
+        currentStep += direction;
+        document.querySelector(`.interview-step[data-step="${currentStep}"]`).classList.add('active');
+
+        updateProgress();
+
+        if (currentStep === 2) {
+            document.getElementById('prevBtn').style.display = 'none';
+        } else if (currentStep > 2) {
+            document.getElementById('prevBtn').style.display = 'block';
+        }
+
+       if (currentStep === totalSteps) {
+    document.getElementById("nextBtn").style.display = "none";
+    document.getElementById("submitBtn").style.display = "inline-block";
+} else {
+    document.getElementById("nextBtn").style.display = "inline-block";
+    document.getElementById("submitBtn").style.display = "none";
+}
+}
+    async function submitInterview(event) {
+        event.preventDefault();
+        if (!validateCurrentStep()) return;
+
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.disabled = true;
+        submitBtn.innerText = "SUBMITTING...";
+
+        // Extract internal structural page elements
+        const role = document.getElementById('selectedRole').value;
+        const answer1 = document.getElementById('q1').value.trim();
+        const answer2 = document.getElementById('q2').value.trim();
+        const answer3 = document.getElementById('q3').value.trim();
+        const answer4 = document.getElementById('q4').value.trim();
+        const answer5 = document.getElementById('q5').value.trim();
+
+        // Pull fallback session state definitions established during authentication execution
+        let sessionMeta = {};
+
+try {
+    sessionMeta = JSON.parse(
+        localStorage.getItem("loggedInUser") || "{}"
+    );
+} catch (error) {
+    console.warn("Invalid loggedInUser data in localStorage.");
+}
+
+
+        const applicantName = sessionMeta.fullName || "Anonymous Applicant";
+
+        try {
+            // Push elements smoothly up to Firestore Database records tracking configurations
+            console.log(auth.currentUser);
+            await addDoc(collection(db, "Interviews"), {
+                uid: loggedInUserUid,
+                fullName: applicantName,
+                appliedPosition: role,
+                responses: {
+                    q1: answer1,
+                    q2: answer2,
+                    q3: answer3,
+                    q4: answer4,
+                    q5: answer5
+                },
+                timestamp: serverTimestamp()
+            });
+
+            // Transition UI framework environments
+            document.getElementById('interviewForm').style.display = 'none';
+            document.getElementById('progressContainer').style.display = 'none';
+            document.getElementById('successScreen').style.display = 'block';
+
+        } catch (error) {
+            console.error("Firebase database upload tracking error:", error);
+            alert("Error sending assessment data to server. Check data network properties and try again.");
+            submitBtn.disabled = false;
+            submitBtn.innerText = "SUBMIT ASSESSMENT";
+        }
+    }
+
+    // Attach local scope elements onto window environment arrays so dynamic DOM inline commands run
+    window.selectRole = selectRole;
+    window.navigateStep = navigateStep;
+    window.submitInterview = submitInterview;
+</script>
+
+</body>
+</html>
