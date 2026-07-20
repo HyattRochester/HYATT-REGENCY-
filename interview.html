@@ -607,15 +607,9 @@
     return;
 }
     function validateCurrentStep() {
-        if (currentStep === 1) {
-            const roleChosen = document.getElementById('selectedRole').value;
-            if (!roleChosen) {
-                alert("Please select a professional role to start your interview.");
-                return false;
-            }
-            return true;
-        }
-
+      if (currentStep === 1) {
+    return true;
+}
         const currentTextArea = document.querySelector(`.interview-step[data-step="${currentStep}"] textarea`);
         if (currentTextArea && currentTextArea.value.trim() === "") {
             alert("Please provide a response before proceeding to the next page.");
