@@ -491,12 +491,34 @@
     let loggedInUserUid = "anonymous";
 
     // Listen for current system context state matching to assign records correctly
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            loggedInUserUid = user.uid;
-        }
-    });
+   onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        loggedInUserUid = user.uid;
 
+        // Read the applicant's saved data
+        const applicantRef = doc(db, "Applicants", user.uid);
+        const applicantSnap = await getDoc(applicantRef);
+
+        if (applicantSnap.exists()) {
+            const data = applicantSnap.data();
+
+            // Automatically select the saved occupation
+            const role = data.occupation;
+
+            document.getElementById("selectedRole").value = role;
+
+            document.querySelectorAll(".role-option").forEach(option => {
+                if (option.textContent.trim().includes(role)) {
+                    option.classList.add("selected");
+                }
+                // Prevent changing the role
+                option.style.pointerEvents = "none";
+            });
+        }
+    } else {
+        window.location.href = "index.html";
+    }
+});
     function updateProgress() {
         const progressContainer = document.getElementById('progressContainer');
         const questionButtonGroup = document.getElementById('questionButtonGroup');
@@ -529,11 +551,8 @@
     }
 
     function selectRole(element, roleName) {
-        document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('selected'));
-        element.classList.add('selected');
-        document.getElementById('selectedRole').value = roleName;
-    }
-
+    return;
+}
     function validateCurrentStep() {
         if (currentStep === 1) {
             const roleChosen = document.getElementById('selectedRole').value;
