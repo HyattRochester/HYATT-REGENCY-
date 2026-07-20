@@ -361,6 +361,50 @@
                 padding: 25px 20px;
             }
         }
+   .feedback-popup{
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-30px);
+    width: 90%;
+    max-width: 430px;
+    background: #1a222f;
+    border: 1px solid #00e676;
+    border-radius: 12px;
+    padding: 22px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 15px 40px rgba(0,0,0,.45);
+    opacity: 0;
+    visibility: hidden;
+    transition: .4s ease;
+    z-index: 9999;
+}
+
+.feedback-popup.show{
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.popup-icon{
+    font-size: 46px;
+    color: #00e676;
+    margin-bottom: 10px;
+}
+
+.popup-title{
+    font-size: 20px;
+    font-weight: bold;
+    color: #00e676;
+    margin-bottom: 10px;
+}
+
+.popup-message{
+    font-size: 15px;
+    line-height: 1.6;
+    color: #f3f4f6;
+}
     </style>
 </head>
 <body>
@@ -393,12 +437,12 @@
                 </ul>
             </div>
 
-            <label class="question-label" style="font-size: 1rem; margin-bottom: 10px;">Select the primary position you are applying for:</label>
+            <label class="question-label" style="font-size: 1rem; margin-bottom: 10px;">proceed to online interview assessment:</label>
             <div class="role-grid">
-                <div class="role-option" onclick="selectRole(this, 'Housekeeping')">Housekeeping Professional</div>
-                <div class="role-option" onclick="selectRole(this, 'Waiter')">Food & Beverage Waiter</div>
-                <div class="role-option" onclick="selectRole(this, 'Bell Boy')">Guest Services / Bell Boy</div>
-                <div class="role-option" onclick="selectRole(this, 'Receptionist')">Front Desk Receptionist</div>
+                <div class="role-option" onclick="selectRole(this, 'Housekeeping')">Complete full assessment</div>
+                <div class="role-option" onclick="selectRole(this, 'Waiter')">Demonstrate professionalism</div>
+                <div class="role-option" onclick="selectRole(this, 'Bell Boy')">Provide genuine responses</div>
+                <div class="role-option" onclick="selectRole(this, 'Receptionist')">Submit with confidence</div>
             </div>
             <input type="hidden" id="selectedRole" name="role" required>
 
@@ -408,36 +452,45 @@
             </div>
         </div>
 
-        <!-- PAGE 2: Question 1 -->
-        <div class="interview-step" data-step="2">
-            <label class="question-label" for="q1">1. A guest approaches you with an urgent complaint regarding their hospitality experience. Walk us through your immediate steps to handle and de-escalate the situation.</label>
-            <textarea class="textarea-input" id="q1" name="q1_response" placeholder="Type your response here..." required></textarea>
-        </div>
+       <!-- PAGE 2: Question 1 -->
+<div class="interview-step" data-step="2">
+    <label class="question-label" for="q1">
+        1. A guest approaches you with an urgent complaint regarding their hospitality experience. Walk us through your immediate steps to handle and de-escalate the situation,and ensure the guest leaves satisfied.
+    </label>
+    <textarea class="textarea-input" id="q1" name="q1_response" placeholder="Type your response here..." required></textarea>
+</div>
 
-        <!-- PAGE 3: Question 2 -->
-        <div class="interview-step" data-step="3">
-            <label class="question-label" for="q2">2. Hyatt Regency maintains a reputation for immaculate, luxury 5-star service. How do you ensure your specific daily tasks reflect these elite quality standards?</label>
-            <textarea class="textarea-input" id="q2" name="q2_response" placeholder="Type your response here..." required></textarea>
-        </div>
+<!-- PAGE 3: Question 2 -->
+<div class="interview-step" data-step="3">
+    <label class="question-label" for="q2">
+        2. Hyatt Regency is known for delivering exceptional five-star hospitality. Explain how you would consistently maintain high standards of cleanliness, professionalism, teamwork, and customer service in your daily responsibilities.
+    </label>
+    <textarea class="textarea-input" id="q2" name="q2_response" placeholder="Type your response here..." required></textarea>
+</div>
 
-        <!-- PAGE 4: Question 3 -->
-        <div class="interview-step" data-step="4">
-            <label class="question-label" for="q3">3. Hospitality settings can change instantly during peak hours. Describe a time you had to adapt quickly to high-pressure scenarios or help out a busy teammate.</label>
-            <textarea class="textarea-input" id="q3" name="q3_response" placeholder="Type your response here..." required></textarea>
-        </div>
+<!-- PAGE 4: Question 3 -->
+<div class="interview-step" data-step="4">
+    <label class="question-label" for="q3">
+        3. Describe a time when you had to work under pressure during a busy shift. How did you prioritize your responsibilities, support your colleagues, and ensure guests continued to receive excellent service?
+    </label>
+    <textarea class="textarea-input" id="q3" name="q3_response" placeholder="Type your response here..." required></textarea>
+</div>
 
-        <!-- PAGE 5: Question 4 -->
-        <div class="interview-step" data-step="5">
-            <label class="question-label" for="q4">4. What draws you to join the legacy of the Hyatt Regency brand specifically, and how do your professional values match ours?</label>
-            <textarea class="textarea-input" id="q4" name="q4_response" placeholder="Type your response here..." required></textarea>
-        </div>
+<!-- PAGE 5: Question 4 -->
+<div class="interview-step" data-step="5">
+    <label class="question-label" for="q4">
+        4. Why do you want to work at Hyatt Regency Hotel? Explain how your skills, experience, and personal values align with Hyatt's commitment to delivering outstanding guest experiences.
+    </label>
+    <textarea class="textarea-input" id="q4" name="q4_response" placeholder="Type your response here..." required></textarea>
+</div>
 
-        <!-- PAGE 6: Question 5 -->
-        <div class="interview-step" data-step="6">
-            <label class="question-label" for="q5">5. How do you handle constructive feedback from a supervisor or manager regarding your service delivery?</label>
-            <textarea class="textarea-input" id="q5" name="q5_response" placeholder="Type your response here..." required></textarea>
-        </div>
-
+<!-- PAGE 6: Question 5 -->
+<div class="interview-step" data-step="6">
+    <label class="question-label" for="q5">
+        5. Constructive feedback is an important part of professional growth. Describe how you would respond if your supervisor pointed out areas where your performance needed improvement. Provide an example if possible.
+    </label>
+    <textarea class="textarea-input" id="q5" name="q5_response" placeholder="Type your response here..." required></textarea>
+</div>
         <!-- Action Buttons -->
         <div class="button-group" id="questionButtonGroup" style="display: none;">
             <button type="button" class="btn btn-prev" id="prevBtn" onclick="navigateStep(-1)">Back</button>
@@ -633,12 +686,12 @@ try {
 const interviewSnap = await getDoc(interviewRef);
 
 if (interviewSnap.exists()) {
-    alert("INTERVIEW COMPLETED! You have already submitted your interview.");
+    showFeedbackPopup();
+
     submitBtn.disabled = false;
     submitBtn.innerText = "SUBMIT ASSESSMENT";
     return;
 }
-
 // Save the interview
 await setDoc(interviewRef, {
     uid: loggedInUserUid,
@@ -667,10 +720,27 @@ await setDoc(interviewRef, {
     }
 
     // Attach local scope elements onto window environment arrays so dynamic DOM inline commands run
+    function showFeedbackPopup() {
+    const popup = document.getElementById("feedbackPopup");
+
+    popup.classList.add("show");
+
+    setTimeout(() => {
+        popup.classList.remove("show");
+    }, 4000); // 4 seconds
+}
     window.selectRole = selectRole;
     window.navigateStep = navigateStep;
     window.submitInterview = submitInterview;
 </script>
-
+<div id="feedbackPopup" class="feedback-popup">
+    <div class="popup-icon">✓</div>
+    <div class="popup-title">Interview Already Submitted</div>
+    <div class="popup-message">
+        Dear Applicant,<br><br>
+        You have already submitted your interview assessment.<br>
+        Duplicate submissions are not permitted.
+    </div>
+</div>
 </body>
 </html>
