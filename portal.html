@@ -312,14 +312,13 @@
                     <a href="#" class="info-link" id="info-link-btn" style="display: none;">Click here</a>
                 </div>
 
-                <!-- CARD 2: Job Openings pointing safely to openings.html -->
-                <div class="center-card">
+                <!-- CARD 2: Job Openings pointing to openings.html -->
+                <div class="center-card" id="job-openings-card">
                     <div class="center-card-text">
                         <h3>Job Application</h3>
                         <p>Explore current career openings and submit documents to your qualified/ interested field.</p>
                     </div>
-                    <!-- Hidden/disabled until Firebase confirms the endpoint -->
-                    <a href="#" class="info-link" id="apply-link-btn" style="opacity: 0.5; pointer-events: none;">Apply Now</a>
+                    <a href="openings.html" class="info-link" id="apply-link-btn">Apply Now</a>
                 </div>
 
             </div>
@@ -330,11 +329,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        import {
-    getFirestore,
-    doc,
-    onSnapshot
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCsZbX8doOr6DxT7C9p8SK6YReKKlyVcNI",
@@ -354,9 +349,8 @@
             if (user) {
                 const userDocRef = doc(db, "Applicants", user.uid);
 
-
-// Applicant information
-onSnapshot(userDocRef, (snapshot) => {
+                // Applicant information snapshot listener
+                onSnapshot(userDocRef, (snapshot) => {
                     if (snapshot.exists()) {
                         const data = snapshot.data();
 
@@ -378,40 +372,38 @@ onSnapshot(userDocRef, (snapshot) => {
                             statusBadge.classList.add("green-status");
                             statusBadge.classList.remove("red-status");
                         }
-// Save applicant data for later use
-window.currentApplicantData = data;
-// Applicant-specific Information Center
-document.getElementById("info-message").innerText =
-    data.infoMessage ||
-    "Important processing documentation and status instructions will appear here.";
 
-const infoLinkBtn = document.getElementById("info-link-btn");
+                        // Save applicant data for global availability
+                        window.currentApplicantData = data;
 
-if (data.infoLink) {
-    infoLinkBtn.href = data.infoLink;
-    infoLinkBtn.target = "_blank";
-    infoLinkBtn.style.display = "inline-flex";
-} else {
-    infoLinkBtn.style.display = "none";
-}
+                        // 3. Information Center Link
+                        document.getElementById("info-message").innerText =
+                            data.infoMessage ||
+                            "Important processing documentation and status instructions will appear here.";
 
-// Apply button (same for everyone)
-const applyLinkBtn = document.getElementById("apply-link-btn");
+                        const infoLinkBtn = document.getElementById("info-link-btn");
+                        if (data.infoLink) {
+                            infoLinkBtn.href = data.infoLink;
+                            infoLinkBtn.target = "_blank";
+                            infoLinkBtn.style.display = "inline-flex";
+                        } else {
+                            infoLinkBtn.style.display = "none";
+                        }
 
-if (data.occupation) {
-    applyLinkBtn.href = "openings.html";
-    applyLinkBtn.style.opacity = "1";
-    applyLinkBtn.style.pointerEvents = "auto";
-} else {
-    applyLinkBtn.style.display = "none";
-}
-applyLinkBtn.style.opacity = "1";
-applyLinkBtn.style.pointerEvents = "auto";
+                        // 4. Job Openings Card Visibility Logic
+                        // Hide card if applicant has already applied (has an applicationCode or active status)
+                        const jobCard = document.getElementById("job-openings-card");
+                        const hasApplied = data.applicationCode || (data.applicationStatus && data.applicationStatus.trim().toLowerCase() !== "no application found");
+
+                        if (hasApplied) {
+                            jobCard.style.display = "none";
+                        } else {
+                            jobCard.style.display = "flex";
+                        }
                     }
                 }, (error) => {
                     console.error("Database tracking link disruption:", error);
                 });
-
 
             } else {
                 window.location.href = "index.html"; 
@@ -428,3 +420,4 @@ applyLinkBtn.style.pointerEvents = "auto";
         };
     </script>
 </body>
+</html>
