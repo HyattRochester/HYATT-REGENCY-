@@ -191,10 +191,18 @@ body{
     border-bottom:none;
 }
 
+.applicant-number {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--gold);
+    min-width: 35px;
+}
+
 .applicant-info{
     display:flex;
     flex-direction:column;
     gap:4px;
+    flex: 1;
 }
 
 .applicant-name{
@@ -253,6 +261,45 @@ body{
     padding:20px 0;
 }
 
+/* Process Tracker Styles */
+.process-tracker {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(0,0,0,0.2);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 18px;
+}
+
+.process-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.process-step.completed {
+    color: #4ade80;
+}
+
+.editor-grid input, .editor-grid select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    color: white;
+    margin-top: 6px;
+}
+
+.editor-grid label {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
 @media(max-width:900px){
     .admin-container{
         flex-direction:column;
@@ -273,7 +320,7 @@ body{
 
 <body>
 
-    <div id="adminLogin" style="max-width:420px;margin:80px auto;padding:30px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;">
+<div id="adminLogin" style="max-width:420px;margin:80px auto;padding:30px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;">
     <h2 style="color:#c5a880;margin-bottom:20px;text-align:center;">Admin Login</h2>
 
     <input id="adminEmail" type="email" placeholder="Admin email"
@@ -294,368 +341,172 @@ body{
 
     <!-- Sidebar -->
     <aside class="sidebar">
-
         <h2>HYATT</h2>
         <p>Admin Portal</p>
-
         <nav>
-
             <button class="menu-btn active">
                 📊 Dashboard
             </button>
-
             <button class="menu-btn">
                 👥 Applicants
             </button>
-
-            <button class="menu-btn">
-                📥 New Applications
-            </button>
-
-            <button class="menu-btn">
-                📈 Statistics
-            </button>
-
             <button class="menu-btn logout">
                 🚪 Logout
             </button>
-
         </nav>
-
     </aside>
 
     <!-- Main Content -->
     <main class="content">
 
         <header class="top-header">
-
             <div>
-
                 <h1>Applicant Management</h1>
-
-                <p>
-                    Welcome Administrator
-                </p>
-
+                <p>Welcome Administrator</p>
             </div>
-
         </header>
 
         <!-- Statistics -->
-
         <section class="stats-grid">
-
             <div class="stat-card">
-
                 <h3>Total Applicants</h3>
-
-                <h2 id="totalApplicants">
-                    0
-                </h2>
-
+                <h2 id="totalApplicants">0</h2>
             </div>
-
             <div class="stat-card">
-
-                <h3>Pending</h3>
-
-                <h2 id="pendingApplicants">
-                    0
-                </h2>
-
+                <h3>Submitted</h3>
+                <h2 id="pendingApplicants">0</h2>
             </div>
-
             <div class="stat-card">
-
-                <h3>Approved</h3>
-
-                <h2 id="approvedApplicants">
-                    0
-                </h2>
-
+                <h3>Interviewed</h3>
+                <h2 id="approvedApplicants">0</h2>
             </div>
-
             <div class="stat-card">
-
-                <h3>Rejected</h3>
-
-                <h2 id="rejectedApplicants">
-                    0
-                </h2>
-
+                <h3>Verified</h3>
+                <h2 id="rejectedApplicants">0</h2>
             </div>
-
         </section>
 
         <!-- Search -->
-
         <section class="search-box">
-
             <input
                 type="text"
                 id="searchApplicant"
-                placeholder="Search applicant by name, email or phone...">
-
+                placeholder="Search applicant by number, name, email or phone...">
         </section>
 
-        <!-- New Applicants -->
-
+        <!-- All Applicants List (Unified Single Page) -->
         <section class="card">
-
-            <h2>
-                🆕 New Applicants
-            </h2>
-
-            <div id="newApplicants">
-
-                <!-- Firebase will load applicants here -->
-
-            </div>
-
-        </section>
-
-        <!-- All Applicants -->
-
-        <section class="card">
-
-            <h2>
-                👥 All Applicants
-            </h2>
-
+            <h2>👥 All Applicants</h2>
             <div id="allApplicants">
-
                 <!-- Firebase loads all applicants -->
-
             </div>
-
         </section>
 
         <!-- Applicant Editor -->
-<section class="card" id="editorSection" style="display:none;">
+        <section class="card" id="editorSection" style="display:none;">
+            <h2>📝 Edit Applicant</h2>
 
-    <h2>📝 Edit Applicant</h2>
-
-    <div class="editor-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
-
-        <div>
-            <label>Applicant Name</label>
-            <input id="editName" type="text" disabled>
-        </div>
-
-        <div>
-            <label>Email</label>
-            <input id="editEmail" type="email" disabled>
-        </div>
-
-        <div>
-            <label>Phone</label>
-            <input id="editPhone" type="text" disabled>
-        </div>
-
-        <div>
-            <label>Country</label>
-            <input id="editCountry" type="text" disabled>
-        </div>
-
-        <div>
-            <label>Education</label>
-            <input id="editEducation" type="text" disabled>
-        </div>
-
-        <div>
-            <label>Occupation</label>
-            <input id="editOccupation" type="text" disabled>
-        </div>
-
-        <div>
-            <label>Application Status</label>
-            <select id="editStatus">
-                <option value="Pending">Pending</option>
-                <option value="Approved">Approved</option>
-                <option value="Rejected">Rejected</option>
-                <option value="Interview Scheduled">Interview Scheduled</option>
-            </select>
-        </div>
-
-        <div>
-            <label>Application Code</label>
-            <input id="editCode" type="text" placeholder="HYA-2026-001">
-        </div>
-
-        <div>
-            <label>Date Applied</label>
-            <input id="editDate" type="text" placeholder="01 Aug 2026">
-        </div>
-
-    </div>
-
-    <div style="margin-top:18px;">
-        <label>Information Message</label>
-        <textarea id="editMessage" rows="5" style="width:100%;padding:14px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:white;"></textarea>
-    </div>
-
-    <div style="margin-top:18px;">
-        <label>Information Link</label>
-        <input id="editInfoLink" type="url" placeholder="https://...">
-    </div>
-
-    <div style="margin-top:18px;">
-        <label>View Application Link</label>
-        <input id="editViewLink" type="url" placeholder="https://...">
-    </div>
-
-    <button id="saveApplicantBtn" style="margin-top:24px;width:100%;padding:16px;border:none;border-radius:16px;background:#c5a880;color:#111827;font-weight:800;font-size:1rem;cursor:pointer;">
-        SAVE CHANGES
-    </button>
-
-    <p id="saveMessage" style="text-align:center;margin-top:14px;color:#4ade80;font-weight:600;"></p>
-
-</section>
-
-        <section class="card">
-
-            <h2>👤 Applicant Details</h2>
-
-            <div class="details-grid">
-
-                <label>Full Name</label>
-                <input type="text" id="fullName">
-
-                <label>Email</label>
-                <input type="email" id="email">
-
-                <label>Phone</label>
-                <input type="text" id="phone">
-
-                <label>Country</label>
-                <input type="text" id="country">
-
-                <label>Education</label>
-                <input type="text" id="education">
-
-                <label>Occupation</label>
-                <input type="text" id="occupation">
-
-                <label>Application Status</label>
-
-                <select id="applicationStatus">
-
-                    <option>New Applicant</option>
-                    <option>Application Received</option>
-                    <option>Under Review</option>
-                    <option>Interview Scheduled</option>
-                    <option>Interview Completed</option>
-                    <option>Documents Required</option>
-                    <option>Approved</option>
-                    <option>Rejected</option>
-                    <option>Job Offer Sent</option>
-
-                </select>
-
-                <label>Application Code</label>
-
-                <input
-                    type="text"
-                    id="applicationCode">
-
-                <label>Date Applied</label>
-
-                <input
-                    type="text"
-                    id="dateApplied">
-
+            <!-- Process Tracker for Admin -->
+            <div class="process-tracker">
+                <span style="font-size:0.85rem; color: var(--gold); font-weight:700;">COMPLETED STAGES TRACKER</span>
+                <div class="process-step" id="stepAppSubmitted">
+                    <span id="iconAppSubmitted">⚪</span> Application Submitted
+                </div>
+                <div class="process-step" id="stepIntSubmitted">
+                    <span id="iconIntSubmitted">⚪</span> Interview Submitted
+                </div>
+                <div class="process-step" id="stepVerSubmitted">
+                    <span id="iconVerSubmitted">⚪</span> Verification Submitted
+                </div>
             </div>
 
-        </section>
+            <div class="editor-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+                <div>
+                    <label>Applicant Name</label>
+                    <input id="editName" type="text">
+                </div>
 
-        <!-- Applicant Information -->
+                <div>
+                    <label>Email</label>
+                    <input id="editEmail" type="email">
+                </div>
 
-        <section class="card">
+                <div>
+                    <label>Phone</label>
+                    <input id="editPhone" type="text">
+                </div>
 
-            <h2>📢 Applicant Information</h2>
+                <div>
+                    <label>Country</label>
+                    <input id="editCountry" type="text">
+                </div>
 
-            <label>Information Message</label>
+                <div>
+                    <label>Education</label>
+                    <input id="editEducation" type="text">
+                </div>
 
-            <textarea
-                id="infoMessage"
-                rows="6"
-                placeholder="Type applicant information here..."></textarea>
+                <div>
+                    <label>Occupation</label>
+                    <input id="editOccupation" type="text">
+                </div>
 
-            <label>Information Button Link</label>
+                <div>
+                    <label>Select Preset Status</label>
+                    <select id="editStatusSelect" onchange="updateStatusText(this.value)">
+                        <option value="NO APPLICATION FOUND">1. NO APPLICATION FOUND</option>
+                        <option value="APPLICATION SUBMITTED">2. APPLICATION SUBMITTED</option>
+                        <option value="INTERVIEW SUBMITTED">3. INTERVIEW SUBMITTED</option>
+                        <option value="VERIFICATION SUBMITTED">4. VERIFICATION SUBMITTED</option>
+                    </select>
+                </div>
 
-            <input
-                type="text"
-                id="infoLink"
-                placeholder="https://">
+                <div>
+                    <label>Application Status (Editable Space)</label>
+                    <input id="editStatus" type="text" placeholder="Type custom status here..." oninput="updateProcessTracker(this.value)">
+                </div>
 
-            <label>Application Button Link</label>
+                <div>
+                    <label>Application Code</label>
+                    <input id="editCode" type="text" placeholder="HYA-2026-001">
+                </div>
 
-            <input
-                type="text"
-                id="viewAppLink"
-                placeholder="https://">
+                <div>
+                    <label>Date Applied</label>
+                    <input id="editDate" type="text" placeholder="01 Aug 2026">
+                </div>
+            </div>
 
-            <button id="saveChanges">
+            <div style="margin-top:18px;">
+                <label>Information Message</label>
+                <textarea id="editMessage" rows="4" style="width:100%;padding:14px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:white;margin-top:6px;"></textarea>
+            </div>
 
-                💾 Save Changes
+            <div style="margin-top:18px;">
+                <label>Information Link</label>
+                <input id="editInfoLink" type="url" placeholder="https://..." style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:white;margin-top:6px;">
+            </div>
 
+            <div style="margin-top:18px;">
+                <label>View Application Link</label>
+                <input id="editViewLink" type="url" placeholder="https://..." style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:white;margin-top:6px;">
+            </div>
+
+            <button id="saveApplicantBtn" style="margin-top:24px;width:100%;padding:16px;border:none;border-radius:16px;background:#c5a880;color:#111827;font-weight:800;font-size:1rem;cursor:pointer;">
+                SAVE CHANGES
             </button>
 
-        </section>
-
-
-        <!-- Applicant Documents -->
-
-        <section class="card">
-
-            <h2>📂 Applicant Documents</h2>
-
-            <div class="document-box">
-
-                <p id="documentStatus">
-                    No documents uploaded yet.
-                </p>
-
-                <a
-                    id="documentLink"
-                    href="#"
-                    target="_blank"
-                    class="document-btn"
-                    style="display:none;">
-
-                    📄 View Uploaded Document
-
-                </a>
-
-            </div>
-
+            <p id="saveMessage" style="text-align:center;margin-top:14px;color:#4ade80;font-weight:600;"></p>
         </section>
 
     </main>
-
 </div>
 
-<!-- ADD FIREBASE AND admin.js HERE -->
-
-<script type="module" src="admin.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-import {
-    getAuth,
-    signInWithEmailAndPassword,
-    signOut
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-import {
-    getFirestore,
-    collection,
-    onSnapshot,
-    doc,
-    updateDoc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-// Firebase config
 const firebaseConfig = {
     apiKey: "AIzaSyCsZbX8doOr6DxT7C9p8SK6YReKKlyVcNI",
     authDomain: "hyatt-regency-afc7e.firebaseapp.com",
@@ -670,7 +521,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Allowed admin email
 const ADMIN_EMAIL = "fransescomarie@gmail.com";
 
 const loginBox = document.getElementById("adminLogin");
@@ -690,32 +540,27 @@ document.getElementById("adminLoginBtn").onclick = async () => {
 
     try {
         await signInWithEmailAndPassword(auth, email, password);
-
         loginBox.style.display = "none";
         adminPanel.style.display = "flex";
-
         loadApplicants();
-
     } catch (error) {
         loginMsg.innerText = "Invalid email or password.";
     }
 };
 
-// Logout button
 document.querySelector(".logout").onclick = async () => {
     await signOut(auth);
     window.location.href = "index.html";
 };
 
 let applicantsCache = [];
+let selectedApplicantId = null;
 
-// Load all applicants in real time
 function loadApplicants() {
     const applicantsRef = collection(db, "Applicants");
 
     onSnapshot(applicantsRef, (snapshot) => {
         applicantsCache = [];
-
         snapshot.forEach((docSnap) => {
             applicantsCache.push({
                 id: docSnap.id,
@@ -724,55 +569,46 @@ function loadApplicants() {
         });
 
         renderApplicants(applicantsCache);
-        renderNewApplicants(applicantsCache);
         updateStatistics(applicantsCache);
     });
 }
 
-// Statistics
 function updateStatistics(applicants) {
     totalApplicantsEl.innerText = applicants.length;
 
-    let pending = 0;
-    let approved = 0;
-    let rejected = 0;
+    let sub = 0, intv = 0, ver = 0;
 
     applicants.forEach(app => {
-        const status = (app.applicationStatus || "").toLowerCase();
-
-        if (status.includes("approved")) approved++;
-        else if (status.includes("rejected")) rejected++;
-        else pending++;
+        const status = (app.applicationStatus || "").toUpperCase();
+        if (status.includes("VERIFICATION")) ver++;
+        else if (status.includes("INTERVIEW")) intv++;
+        else if (status.includes("APPLICATION")) sub++;
     });
 
-    pendingApplicantsEl.innerText = pending;
-    approvedApplicantsEl.innerText = approved;
-    rejectedApplicantsEl.innerText = rejected;
+    pendingApplicantsEl.innerText = sub;
+    approvedApplicantsEl.innerText = intv;
+    rejectedApplicantsEl.innerText = ver;
 }
 
-// Render all applicants
 function renderApplicants(applicants) {
     if (applicants.length === 0) {
-        allApplicantsDiv.innerHTML =
-            '<div class="empty-state">No applicants found</div>';
+        allApplicantsDiv.innerHTML = '<div class="empty-state">No applicants found</div>';
         return;
     }
 
-    allApplicantsDiv.innerHTML = applicants.map(app => {
-        const status = app.applicationStatus || "Pending";
+    allApplicantsDiv.innerHTML = applicants.map((app, index) => {
+        const status = app.applicationStatus || "NO APPLICATION FOUND";
 
         let statusClass = "status-pending";
-        if (status.toLowerCase().includes("approved"))
-            statusClass = "status-approved";
-        if (status.toLowerCase().includes("rejected"))
-            statusClass = "status-rejected";
+        if (status.includes("VERIFICATION")) statusClass = "status-approved";
+        if (status.includes("NO APPLICATION")) statusClass = "status-rejected";
 
         return `
             <div class="applicant-item">
+                <div class="applicant-number">#${index + 1}</div>
                 <div class="applicant-info">
                     <div class="applicant-name">${app.fullName || 'No Name'}</div>
-                    <div class="applicant-meta">${app.email || ''}</div>
-                    <div class="applicant-meta">${app.phone || ''}</div>
+                    <div class="applicant-meta">${app.email || ''} | ${app.phone || ''}</div>
                 </div>
 
                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
@@ -786,67 +622,31 @@ function renderApplicants(applicants) {
     }).join('');
 }
 
-// Render newest applicants (latest 5)
-function renderNewApplicants(applicants) {
-    const newest = [...applicants].slice(-5).reverse();
-
-    if (newest.length === 0) {
-        newApplicantsDiv.innerHTML =
-            '<div class="empty-state">No new applicants</div>';
-        return;
-    }
-
-    newApplicantsDiv.innerHTML = newest.map(app => `
-        <div class="applicant-item">
-            <div class="applicant-info">
-                <div class="applicant-name">${app.fullName || 'No Name'}</div>
-                <div class="applicant-meta">${app.email || ''}</div>
-            </div>
-
-            <button class="open-btn" onclick="openApplicant('${app.id}')">
-                Open
-            </button>
-        </div>
-    `).join('');
-}
-
 const allApplicantsDiv = document.getElementById("allApplicants");
-const newApplicantsDiv = document.getElementById("newApplicants");
-
 const searchInput = document.getElementById("searchApplicant");
-
 const totalApplicantsEl = document.getElementById("totalApplicants");
 const pendingApplicantsEl = document.getElementById("pendingApplicants");
 const approvedApplicantsEl = document.getElementById("approvedApplicants");
 const rejectedApplicantsEl = document.getElementById("rejectedApplicants");
 
-// Search applicants
 searchInput.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase();
-
-    const filtered = applicantsCache.filter(app =>
+    const filtered = applicantsCache.filter((app, index) =>
+        `#${index + 1}`.includes(term) ||
         (app.fullName || '').toLowerCase().includes(term) ||
         (app.email || '').toLowerCase().includes(term) ||
         (app.phone || '').toLowerCase().includes(term)
     );
-
     renderApplicants(filtered);
 });
 
-let selectedApplicantId = null;
-
 window.openApplicant = function(id) {
-
     const applicant = applicantsCache.find(app => app.id === id);
-
     if (!applicant) return;
 
     selectedApplicantId = id;
-
-    // Show editor
     document.getElementById("editorSection").style.display = "block";
 
-    // Fill fields
     document.getElementById("editName").value = applicant.fullName || "";
     document.getElementById("editEmail").value = applicant.email || "";
     document.getElementById("editPhone").value = applicant.phone || "";
@@ -854,29 +654,83 @@ window.openApplicant = function(id) {
     document.getElementById("editEducation").value = applicant.education || "";
     document.getElementById("editOccupation").value = applicant.occupation || "";
 
-    document.getElementById("editStatus").value =
-        applicant.applicationStatus || "Pending";
+    const currentStatus = applicant.applicationStatus || "NO APPLICATION FOUND";
+    document.getElementById("editStatus").value = currentStatus;
+    
+    // Set dropdown match if existing
+    const selectEl = document.getElementById("editStatusSelect");
+    if([...selectEl.options].some(o => o.value === currentStatus)) {
+        selectEl.value = currentStatus;
+    }
 
-    document.getElementById("editCode").value =
-        applicant.applicationCode || "";
+    document.getElementById("editCode").value = applicant.applicationCode || "";
+    document.getElementById("editDate").value = applicant.dateApplied || "";
+    document.getElementById("editMessage").value = applicant.infoMessage || "";
+    document.getElementById("editInfoLink").value = applicant.infoLink || "";
+    document.getElementById("editViewLink").value = applicant.viewAppLink || "";
 
-    document.getElementById("editDate").value =
-        applicant.dateApplied || "";
-
-    document.getElementById("editMessage").value =
-        applicant.infoMessage || "";
-
-    document.getElementById("editInfoLink").value =
-        applicant.infoLink || "";
-
-    document.getElementById("editViewLink").value =
-        applicant.viewAppLink || "";
-
-    // Scroll to editor
-    document.getElementById("editorSection")
-        .scrollIntoView({ behavior: "smooth" });
+    updateProcessTracker(currentStatus);
+    document.getElementById("editorSection").scrollIntoView({ behavior: "smooth" });
 };
 
+window.updateStatusText = function(val) {
+    document.getElementById("editStatus").value = val;
+    updateProcessTracker(val);
+};
+
+window.updateProcessTracker = function(statusText) {
+    const val = statusText.toUpperCase();
+
+    const appSubmitted = val.includes("APPLICATION SUBMITTED") || val.includes("INTERVIEW SUBMITTED") || val.includes("VERIFICATION SUBMITTED");
+    const intSubmitted = val.includes("INTERVIEW SUBMITTED") || val.includes("VERIFICATION SUBMITTED");
+    const verSubmitted = val.includes("VERIFICATION SUBMITTED");
+
+    setStep("stepAppSubmitted", "iconAppSubmitted", appSubmitted);
+    setStep("stepIntSubmitted", "iconIntSubmitted", intSubmitted);
+    setStep("stepVerSubmitted", "iconVerSubmitted", verSubmitted);
+};
+
+function setStep(stepId, iconId, isDone) {
+    const stepEl = document.getElementById(stepId);
+    const iconEl = document.getElementById(iconId);
+    if (isDone) {
+        stepEl.classList.add("completed");
+        iconEl.innerText = "✅";
+    } else {
+        stepEl.classList.remove("completed");
+        iconEl.innerText = "⚪";
+    }
+}
+
+document.getElementById("saveApplicantBtn").onclick = async () => {
+    if (!selectedApplicantId) return;
+
+    const updatedData = {
+        fullName: document.getElementById("editName").value,
+        email: document.getElementById("editEmail").value,
+        phone: document.getElementById("editPhone").value,
+        country: document.getElementById("editCountry").value,
+        education: document.getElementById("editEducation").value,
+        occupation: document.getElementById("editOccupation").value,
+        applicationStatus: document.getElementById("editStatus").value,
+        applicationCode: document.getElementById("editCode").value,
+        dateApplied: document.getElementById("editDate").value,
+        infoMessage: document.getElementById("editMessage").value,
+        infoLink: document.getElementById("editInfoLink").value,
+        viewAppLink: document.getElementById("editViewLink").value
+    };
+
+    try {
+        const appRef = doc(db, "Applicants", selectedApplicantId);
+        await updateDoc(appRef, updatedData);
+        
+        const saveMsg = document.getElementById("saveMessage");
+        saveMsg.innerText = "Changes saved successfully!";
+        setTimeout(() => { saveMsg.innerText = ""; }, 3000);
+    } catch (err) {
+        alert("Error saving record: " + err.message);
+    }
+};
 </script>
 </body>
 </html>
